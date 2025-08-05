@@ -7,13 +7,13 @@ import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const roboto = Roboto({
+const roboto = Roboto({
   weight: ['400', '700'],
   subsets: ['latin'],
   variable: '--font-roboto',
 });
 
-export const openSans = Open_Sans({
+const openSans = Open_Sans({
   weight: ['400', '700'],
   subsets: ['latin'],
   variable: '--font-open-sans',
