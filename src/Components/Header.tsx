@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function Header() {
   return (
-    <header className="flex w-full items-center justify-between bg-white px-8 py-4 xl:px-[166px]">
+    <header className="fixed z-50 flex w-full items-center justify-between bg-white px-8 py-4 xl:px-[166px]">
       <Link href="/" className="text-2xl font-bold text-black">
         <Image
           src="/images/logo.svg"
