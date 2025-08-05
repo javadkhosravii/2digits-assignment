@@ -1,9 +1,5 @@
 import { withTV } from 'tailwind-variants/transformer';
 
-
-
-
-
 const config = withTV({
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',

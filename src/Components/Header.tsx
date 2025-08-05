@@ -16,7 +16,7 @@ export default function Header() {
         />
       </Link>
 
-      <nav className={`font-roboto flex gap-6 text-lg font-medium text-[#141414]`}>
+      <nav className={`flex gap-6 font-roboto text-lg font-medium text-[#141414]`}>
         <Link href="/blogs" className="transition hover:text-blue-600">
           Blogs
         </Link>
