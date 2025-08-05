@@ -24,9 +24,9 @@ export default function TermsPage() {
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-semibold text-gray-900">Use License</h2>
               <p className="mb-4 text-gray-700">
-                Permission is granted to temporarily download one copy of the materials on 2DIGITS&apos;
-                website for personal, non-commercial transitory viewing only. This is the grant of a
-                license, not a transfer of title, and under this license you may not:
+                Permission is granted to temporarily download one copy of the materials on
+                2DIGITS&apos; website for personal, non-commercial transitory viewing only. This is
+                the grant of a license, not a transfer of title, and under this license you may not:
               </p>
               <ul className="ml-4 list-inside list-disc space-y-2 text-gray-700">
                 <li>Modify or copy the materials</li>

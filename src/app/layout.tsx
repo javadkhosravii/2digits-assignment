@@ -4,6 +4,7 @@ import { Inter, Open_Sans, Roboto } from 'next/font/google';
 import Header from '@/Components/Header';
 
 import './globals.css';
+
 import Footer from '@/Components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });

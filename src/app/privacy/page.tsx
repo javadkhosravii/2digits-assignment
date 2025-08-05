@@ -25,7 +25,7 @@ export default function PrivacyPage() {
                 <li>Technical information about your device and browser</li>
 
                 <li>Usage data and analytics about how you interact with our website</li>
-                
+
                 <li>Cookies and similar tracking technologies</li>
               </ul>
             </section>
@@ -36,7 +36,6 @@ export default function PrivacyPage() {
               </h2>
 
               <p className="mb-4 text-gray-700">
-
                 We use the collected information for the following purposes:
               </p>
 
@@ -55,7 +54,7 @@ export default function PrivacyPage() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-semibold text-gray-900">Data Protection</h2>
-              
+
               <p className="text-gray-700">
                 We implement appropriate technical and organizational measures to protect your
                 personal data against unauthorized access, alteration, disclosure, or destruction.
@@ -118,7 +117,7 @@ export default function PrivacyPage() {
 
             <section className="rounded-lg bg-gray-50 p-6">
               <h2 className="mb-4 text-2xl font-semibold text-gray-900">Contact Us</h2>
-              
+
               <p className="mb-4 text-gray-700">
                 If you have any questions about this Privacy Statement or our data practices, please
                 contact us:
@@ -132,7 +131,7 @@ export default function PrivacyPage() {
                 <p className="mb-2">
                   <strong>Address:</strong> 2DIGITS Agency, [Your Address]
                 </p>
-                
+
                 <p>
                   <strong>Phone:</strong> [Your Phone Number]
                 </p>
