@@ -4,6 +4,7 @@ import { Inter, Open_Sans, Roboto } from 'next/font/google';
 import Header from '@/Components/Header';
 
 import './globals.css';
+import Footer from '@/Components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -31,6 +32,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Header />
 
         {children}
+
+        <Footer />
       </body>
     </html>
   );
