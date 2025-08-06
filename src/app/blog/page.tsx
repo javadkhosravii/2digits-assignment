@@ -142,9 +142,7 @@ export default async function BlogPage({ searchParams }: Props) {
       </section>
 
       {/* Pagination - show when it's not a search result */}
-      {!searchQuery && (
-        <Pagination currentPage={currentPage} totalPages={totalPages} />
-      )}
+      {!searchQuery && <Pagination currentPage={currentPage} totalPages={totalPages} />}
     </main>
   );
 }

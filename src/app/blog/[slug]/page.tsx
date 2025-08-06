@@ -1,11 +1,22 @@
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
+import SafeHtmlRenderer from '@/Components/SafeHtmlRenderer';
 import { fetchBlogBySlug } from '@/server/prepr';
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
+
+// Format the creation date
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
 
 export default async function BlogDetail({ params }: Props) {
   const { slug } = await params;
@@ -15,10 +26,26 @@ export default async function BlogDetail({ params }: Props) {
     return notFound();
   }
 
+  // Extract excerpt from content (first text block or first 200 characters)
+  const getExcerpt = () => {
+    if (blog.content && blog.content.length > 0) {
+      const firstTextContent = blog.content.find(
+        (item) => item && item.__typename === 'Text' && 'text' in item && item.text,
+      );
+      if (firstTextContent && 'text' in firstTextContent && firstTextContent.text) {
+        return firstTextContent.text.length > 200
+          ? `${firstTextContent.text.slice(0, 200)}...`
+          : firstTextContent.text;
+      }
+    }
+    return '';
+  };
+
   return (
     <article>
+      {/* Thumbnail at the top */}
       {blog.banner_image.url && (
-        <div className="relative aspect-[1.52] w-full md:aspect-[3.2]">
+        <div className="relative aspect-[1.9] w-full xl:aspect-[4.2]">
           <Image
             src={blog.banner_image.url}
             alt={blog.title}
@@ -32,67 +59,81 @@ export default async function BlogDetail({ params }: Props) {
         </div>
       )}
 
-      <div className="mx-auto flex w-full max-w-[1800px] flex-col gap-6 px-8 py-4 sm:gap-8 md:py-[56px] lg:px-24 xl:px-[166px]">
+      <div className="flex w-full max-w-[1200px] flex-col gap-6 px-8 py-4 sm:gap-8 md:py-[56px] lg:px-24 xl:px-[166px]">
         <div className="flex flex-col gap-3 sm:gap-4">
+          {/* Tags above the blog title */}
           {blog.categories.length > 0 && (
-            <p className="w-fit rounded bg-[#b4b4b6] px-3 py-1 text-xs font-semibold text-black sm:text-sm">
-              {blog.categories.map((c) => c.body).join(', ')}
-            </p>
+            <div className="flex flex-wrap gap-2">
+              {blog.categories.map((category) => (
+                <span
+                  key={category._id || category.body}
+                  className="w-fit rounded bg-[#b4b4b6] px-3 py-1 text-xs font-semibold text-black sm:text-sm">
+                  {category.body}
+                </span>
+              ))}
+            </div>
           )}
 
+          {/* Title */}
           <h1 className="font-roboto text-2xl font-medium leading-tight sm:text-3xl md:text-4xl lg:text-[48px]">
             {blog.title}
           </h1>
+
+          {/* Publication date */}
+          {blog._created_on && (
+            <p className="font-openSans text-sm text-gray-500 sm:text-base">
+              Published on {formatDate(blog._created_on)}
+            </p>
+          )}
         </div>
 
-        <p className="font-openSans text-base font-normal leading-relaxed text-black sm:text-lg md:text-xl lg:text-[21px]">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Magnis dis parturient montes nascetur ridiculus mus
-          mauris vitae ultricies. Commodo odio aenean sed adipiscing diam donec adipiscing tristique
-          risus. Eu sem integer vitae justo eget magna fermentum. Tellus molestie nunc non blandit
-          massa enim nec dui.
-        </p>
-
-        <h3 className="font-roboto text-lg font-normal text-black sm:text-xl md:text-[21px]">
-          Wordpress
-        </h3>
-
-        <div className="flex flex-col gap-3 sm:gap-4">
-          <p className="font-openSans text-sm font-normal leading-relaxed text-black sm:text-base md:text-[16px]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Magnis dis parturient montes nascetur
-            ridiculus mus mauris vitae ultricies. Commodo odio aenean sed adipiscing diam donec
-            adipiscing tristique risus. Eu sem integer vitae justo eget magna fermentum. Tellus
-            molestie nunc non blandit massa enim nec dui.
+        {/* Excerpt */}
+        {getExcerpt() !== '' && (
+          <p className="font-openSans text-base font-normal italic leading-relaxed text-gray-600 sm:text-lg md:text-xl lg:text-[21px]">
+            {getExcerpt()}
           </p>
+        )}
 
-          <p className="font-openSans text-sm font-normal leading-relaxed text-black sm:text-base md:text-[16px]">
-            Tellus id interdum velit laoreet id donec. Eu scelerisque felis imperdiet proin. Blandit
-            libero volutpat sed cras ornare arcu dui. Euismod in pellentesque massa placerat duis.
-            Dolor sed viverra ipsum nunc aliquet bibendum enim facilisis gravida. At elementum eu
-            facilisis sed odio morbi quis commodo.
-          </p>
-        </div>
+        {/* Blog content rendered safely */}
+        <div className="flex flex-col gap-6">
+          {blog.content && blog.content.length > 0 ? (
+            blog.content.flatMap((contentItem, index) => {
+              if (!contentItem) return [];
 
-        <h3 className="font-roboto text-lg font-normal text-black sm:text-xl md:text-[21px]">
-          Table tennis
-        </h3>
+              if (contentItem.__typename === 'Text' && 'html' in contentItem && contentItem.html) {
+                return [
+                  <SafeHtmlRenderer
+                    key={contentItem._id || `text-${index}`}
+                    html={contentItem.html}
+                  />,
+                ];
+              }
 
-        <div className="flex flex-col gap-3 sm:gap-4">
-          <p className="font-openSans text-sm font-normal leading-relaxed text-black sm:text-base md:text-[16px]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Magnis dis parturient montes nascetur
-            ridiculus mus mauris vitae ultricies. Commodo odio aenean sed adipiscing diam donec
-            adipiscing tristique risus. Eu sem integer vitae justo eget magna fermentum. Tellus
-            molestie nunc non blandit massa enim nec dui.
-          </p>
+              if (contentItem.__typename === 'Quote' && 'body' in contentItem && contentItem.body) {
+                return [
+                  <blockquote
+                    key={contentItem._id || `quote-${index}`}
+                    className="mb-6 border-l-4 border-gray-300 pl-4 text-lg italic">
+                    <p className="font-openSans text-base font-normal leading-relaxed text-black sm:text-lg md:text-xl">
+                      &quot;{contentItem.body}&quot;
+                    </p>
 
-          <p className="font-openSans text-sm font-normal leading-relaxed text-black sm:text-base md:text-[16px]">
-            Tellus id interdum velit laoreet id donec. Eu scelerisque felis imperdiet proin. Blandit
-            libero volutpat sed cras ornare arcu dui. Euismod in pellentesque massa placerat duis.
-            Dolor sed viverra ipsum nunc aliquet bibendum enim facilisis gravida. At elementum eu
-            facilisis sed odio morbi quis commodo.
-          </p>
+                    {'author' in contentItem && contentItem.author && (
+                      <cite className="mt-2 block text-sm not-italic text-gray-600">
+                        — {contentItem.author}
+                      </cite>
+                    )}
+                  </blockquote>,
+                ];
+              }
+
+              return [];
+            })
+          ) : (
+            <p className="font-openSans text-base italic text-gray-500">
+              No content available for this blog post.
+            </p>
+          )}
         </div>
       </div>
     </article>
