@@ -14,7 +14,7 @@ export default function SafeHtmlRenderer({ html, className = '' }: SafeHtmlRende
 
   return (
     <div
-      className={`prose prose-lg prose-headings:font-roboto prose-headings:font-medium prose-p:font-openSans prose-p:leading-relaxed prose-p:text-black max-w-none ${className}`}>
+      className={`prose prose-lg max-w-none prose-headings:font-roboto prose-headings:font-medium prose-p:font-openSans prose-p:leading-relaxed prose-p:text-black ${className}`}>
       {parse(html, options)}
     </div>
   );
