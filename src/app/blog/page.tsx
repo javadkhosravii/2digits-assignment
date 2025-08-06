@@ -141,8 +141,10 @@ export default async function BlogPage({ searchParams }: Props) {
         ))}
       </section>
 
-      {/* Pagination - only show for non-search results */}
-      {searchQuery && <Pagination currentPage={currentPage} totalPages={totalPages} />}
+      {/* Pagination - show when it's not a search result */}
+      {!searchQuery && (
+        <Pagination currentPage={currentPage} totalPages={totalPages} />
+      )}
     </main>
   );
 }
