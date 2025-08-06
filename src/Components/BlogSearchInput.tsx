@@ -2,10 +2,6 @@
 
 import { useState } from 'react';
 
-
-
-
-
 type SearchInputProps = {
   onSearch: (query: string) => void;
 };
@@ -38,7 +34,7 @@ export default function SearchInput({ onSearch }: SearchInputProps) {
 
           <button
             type="submit"
-            className="rounded border-2 border-black px-4 py-2 bg-white text-black hover:bg-black hover:text-white outline-none">
+            className="rounded border-2 border-black bg-white px-4 py-2 text-black outline-none hover:bg-black hover:text-white">
             Search
           </button>
         </form>

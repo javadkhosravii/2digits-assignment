@@ -73,7 +73,7 @@ export default async function BlogPage({ searchParams }: Props) {
       {/* Search results message */}
       {searchQuery && (
         <div className="w-full max-w-[1700px] px-8 xl:px-[166px]">
-          <p className="text-lg text-gray-500 text-center lg:text-start mt-2">
+          <p className="mt-2 text-center text-lg text-gray-500 lg:text-start">
             {total > 0
               ? `Found ${total} result${total === 1 ? '' : 's'} for "${searchQuery}"`
               : `No results found for "${searchQuery}"`}
