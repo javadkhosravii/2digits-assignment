@@ -1,0 +1,17 @@
+query GetLatestBlogs {
+  Blogs(sort: created_on_DESC, limit: 3) {
+    items {
+      _id
+      title
+      _slug
+      banner_image {
+        url
+      }
+      categories {
+        _id
+        body
+        slug
+      }
+    }
+  }
+}

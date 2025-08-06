@@ -4,7 +4,11 @@ import type { FetchOptions } from 'ofetch';
 
 import { gqlClient } from './client';
 import { getSdk } from './generated/getSdk';
-import type { PreprGetHomePageQuery } from './generated/preprAPI.schema';
+import type {
+  PreprGetBlogBySlugQuery,
+  PreprGetHomePageQuery,
+  PreprGetLatestBlogsQuery,
+} from './generated/preprAPI.schema';
 
 // Build the Prepr SDK using the gqlClient + GraphQL analyzer
 export const PreprSdk = getSdk(
@@ -36,5 +40,29 @@ export async function fetchHomePage(): Promise<PreprGetHomePageQuery['Page'] | u
   } catch (error) {
     console.error('Error fetching home page:', error);
     return undefined;
+  }
+}
+
+export async function fetchLatestBlogs(): Promise<
+  NonNullable<PreprGetLatestBlogsQuery['Blogs']>['items']
+> {
+  try {
+    const result = await PreprSdk.GetLatestBlogs();
+    return result.Blogs?.items || [];
+  } catch (error) {
+    console.error('Error fetching latest blogs:', error);
+    return [];
+  }
+}
+
+export async function fetchBlogBySlug(
+  slug: string,
+): Promise<PreprGetBlogBySlugQuery['Blog'] | undefined> {
+  try {
+    const result = await PreprSdk.GetBlogBySlug({ slug });
+    return result.Blog;
+  } catch (error) {
+    console.error('Error fetching blog by slug:', error);
+    return;
   }
 }
