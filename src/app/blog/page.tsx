@@ -105,6 +105,8 @@ export default async function BlogPage({ searchParams }: Props) {
 
       {/* Filter buttons */}
       <div className="w-full max-w-[1700px] px-8 xl:px-[166px]">
+        <h2 className="mt-4 font-roboto text-xl font-medium">Filter Blogs by Category</h2>
+
         <FilterButtons categories={categories} />
       </div>
 
