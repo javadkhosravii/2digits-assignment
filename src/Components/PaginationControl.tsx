@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -10,6 +11,13 @@ type PaginationProps = {
 };
 
 export default function Pagination({ currentPage, totalPages }: PaginationProps) {
+  const searchParams = useSearchParams();
+
+  const createPageUrl = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', page.toString());
+    return `/blog?${params.toString()}`;
+  };
   const generatePages = () => {
     const pages: (number | string)[] = [];
 
@@ -59,7 +67,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
             ) : (
               <Link
                 key={`page-${page}`}
-                href={`/blog?page=${page}`}
+                href={createPageUrl(page as number)}
                 className={`flex size-10 items-center justify-center rounded-md border text-sm font-medium ${
                   currentPage === page
                     ? 'bg-[#2B1E5A] text-white'
@@ -74,7 +82,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
         {/* Arrows */}
         <div className="flex justify-center gap-2">
           <Link
-            href={`/blog?page=${currentPage - 1}`}
+            href={createPageUrl(currentPage - 1)}
             aria-label="Previous"
             className="rounded p-2 text-gray-500 disabled:opacity-50"
             style={{
@@ -85,7 +93,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
           </Link>
 
           <Link
-            href={`/blog?page=${currentPage + 1}`}
+            href={createPageUrl(currentPage + 1)}
             aria-label="Next"
             className="rounded p-2 text-gray-500 disabled:opacity-50"
             style={{
@@ -101,7 +109,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
       <div className="hidden items-center gap-2 sm:flex">
         {/* Previous Arrow */}
         <Link
-          href={`/blog?page=${currentPage - 1}`}
+          href={createPageUrl(currentPage - 1)}
           aria-label="Previous"
           className="rounded p-2 text-gray-500 disabled:opacity-50"
           style={{
@@ -123,7 +131,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
             ) : (
               <Link
                 key={`page-${page}`}
-                href={`/blog?page=${page}`}
+                href={createPageUrl(page as number)}
                 className={`flex size-10 items-center justify-center rounded-md border text-sm font-medium ${
                   currentPage === page
                     ? 'bg-[#2B1E5A] text-white'
@@ -137,7 +145,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
 
         {/* Next Arrow */}
         <Link
-          href={`/blog?page=${currentPage + 1}`}
+          href={createPageUrl(currentPage + 1)}
           aria-label="Next"
           className="rounded p-2 text-gray-500 disabled:opacity-50"
           style={{
