@@ -1,0 +1,18 @@
+query SearchBlogs($search: String!) {
+  Blogs(where: { _search: $search }) {
+    items {
+      _id
+      title
+      _slug
+      banner_image {
+        url
+      }
+      categories {
+        _id
+        body
+        slug
+      }
+    }
+    total
+  }
+}

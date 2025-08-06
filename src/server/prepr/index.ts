@@ -9,6 +9,7 @@ import type {
   PreprGetHomePageQuery,
   PreprGetLatestBlogsQuery,
   PreprGetPaginatedBlogsQuery,
+  PreprSearchBlogsQuery,
 } from './generated/preprAPI.schema';
 
 // Build the Prepr SDK using the gqlClient + GraphQL analyzer
@@ -84,6 +85,25 @@ export async function fetchPaginatedBlogs(
     };
   } catch (error) {
     console.error('Error fetching paginated blogs:', error);
+    return {
+      blogs: [],
+      total: 0,
+    };
+  }
+}
+
+export async function fetchSearchedBlogs(search: string): Promise<{
+  blogs: NonNullable<PreprSearchBlogsQuery['Blogs']>['items'];
+  total: number;
+}> {
+  try {
+    const result = await PreprSdk.SearchBlogs({ search });
+    return {
+      blogs: result.Blogs?.items || [],
+      total: result.Blogs?.total || 0,
+    };
+  } catch (error) {
+    console.error('Error searching blogs:', error);
     return {
       blogs: [],
       total: 0,
