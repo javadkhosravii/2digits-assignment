@@ -1,0 +1,18 @@
+query GetPaginatedBlogs($limit: Int!, $skip: Int!) {
+  Blogs(limit: $limit, skip: $skip, sort: created_on_DESC) {
+    items {
+      _id
+      title
+      _slug
+      banner_image {
+        url
+      }
+      categories {
+        _id
+        body
+        slug
+      }
+    }
+    total
+  }
+}

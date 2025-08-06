@@ -8,6 +8,7 @@ import type {
   PreprGetBlogBySlugQuery,
   PreprGetHomePageQuery,
   PreprGetLatestBlogsQuery,
+  PreprGetPaginatedBlogsQuery,
 } from './generated/preprAPI.schema';
 
 // Build the Prepr SDK using the gqlClient + GraphQL analyzer
@@ -64,5 +65,28 @@ export async function fetchBlogBySlug(
   } catch (error) {
     console.error('Error fetching blog by slug:', error);
     return;
+  }
+}
+
+export async function fetchPaginatedBlogs(
+  page: number = 1,
+  limit: number = 9,
+): Promise<{
+  blogs: NonNullable<PreprGetPaginatedBlogsQuery['Blogs']>['items'];
+  total: number;
+}> {
+  try {
+    const skip = (page - 1) * limit;
+    const result = await PreprSdk.GetPaginatedBlogs({ limit, skip });
+    return {
+      blogs: result.Blogs?.items || [],
+      total: result.Blogs?.total || 0,
+    };
+  } catch (error) {
+    console.error('Error fetching paginated blogs:', error);
+    return {
+      blogs: [],
+      total: 0,
+    };
   }
 }
