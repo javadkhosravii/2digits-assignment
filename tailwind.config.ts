@@ -1,3 +1,4 @@
+import typographyPlugin from '@tailwindcss/typography';
 import { withTV } from 'tailwind-variants/transformer';
 
 const config = withTV({
@@ -18,7 +19,7 @@ const config = withTV({
       },
     },
   },
-  plugins: [],
+  plugins: [typographyPlugin],
 });
 
 export default config;

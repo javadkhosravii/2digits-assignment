@@ -2,12 +2,30 @@ query GetBlogBySlug($slug: String!) {
   Blog(slug: $slug) {
     _id
     title
+    _slug
     banner_image {
       url
     }
     categories {
+      _id
       body
+      slug
     }
     _created_on
+    content {
+      __typename
+      ... on Text {
+        _id
+        body
+        html
+        text
+        format
+      }
+      ... on Quote {
+        _id
+        author
+        body
+      }
+    }
   }
 }
