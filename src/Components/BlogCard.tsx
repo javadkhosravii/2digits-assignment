@@ -38,7 +38,7 @@ export default function BlogCard({ blog, index = 0 }: BlogCardProps) {
 
           {blog.categories && blog.categories.length > 0 && (
             <span className="absolute bottom-2 left-2 inline-block rounded bg-[#E9EBF4] px-3 py-1 text-sm font-semibold text-black">
-              {blog.categories[0]?.body || blog.categories[0]?.slug || 'Category'}
+              {blog.categories[0]?.body?.toUpperCase() || blog.categories[0]?.slug || 'Category'}
             </span>
           )}
         </div>

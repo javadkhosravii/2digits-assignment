@@ -1,0 +1,17 @@
+query GetRelatedBlogs($categorySlug: String!) {
+  Blogs(where: { categories_any: [$categorySlug] }, sort: created_on_DESC, limit: 4) {
+    items {
+      _id
+      title
+      _slug
+      banner_image {
+        url
+      }
+      categories {
+        _id
+        body
+        slug
+      }
+    }
+  }
+}
