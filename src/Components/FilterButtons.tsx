@@ -43,7 +43,7 @@ export default function FilterButtons({ categories }: Props) {
             ? 'border-2 border-[#EDEDED] bg-white text-black hover:border-2 hover:border-[#762BFF]'
             : 'bg-[#762BFF] text-white'
         }`}>
-        All blogs
+        All BLOGS
       </button>
 
       {/* Category filter buttons */}

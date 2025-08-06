@@ -10,6 +10,7 @@ import type {
   PreprGetHomePageQuery,
   PreprGetLatestBlogsQuery,
   PreprGetPaginatedBlogsQuery,
+  PreprGetRelatedBlogsQuery,
   PreprSearchBlogsQuery,
 } from './generated/preprAPI.schema';
 
@@ -133,5 +134,20 @@ export async function fetchFilteredBlogs(
       blogs: [],
       total: 0,
     };
+  }
+}
+
+export async function fetchRelatedBlogs(
+  categorySlug: string,
+  currentBlogId: string,
+): Promise<NonNullable<PreprGetRelatedBlogsQuery['Blogs']>['items']> {
+  try {
+    const result = await PreprSdk.GetRelatedBlogs({ categorySlug });
+    const blogs = result.Blogs?.items || [];
+    // Filter out the current blog and limit to 3 items
+    return blogs.filter((blog) => blog._id !== currentBlogId).slice(0, 3);
+  } catch (error) {
+    console.error('Error fetching related blogs:', error);
+    return [];
   }
 }
