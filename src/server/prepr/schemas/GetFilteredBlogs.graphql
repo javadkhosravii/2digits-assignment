@@ -1,0 +1,23 @@
+query GetFilteredBlogs($limit: Int!, $skip: Int!, $categorySlug: String!) {
+  Blogs(
+    limit: $limit
+    skip: $skip
+    sort: created_on_DESC
+    where: { categories_any: [$categorySlug] }
+  ) {
+    items {
+      _id
+      title
+      _slug
+      banner_image {
+        url
+      }
+      categories {
+        _id
+        body
+        slug
+      }
+    }
+    total
+  }
+}

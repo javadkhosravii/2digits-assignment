@@ -6,6 +6,7 @@ import { gqlClient } from './client';
 import { getSdk } from './generated/getSdk';
 import type {
   PreprGetBlogBySlugQuery,
+  PreprGetFilteredBlogsQuery,
   PreprGetHomePageQuery,
   PreprGetLatestBlogsQuery,
   PreprGetPaginatedBlogsQuery,
@@ -104,6 +105,30 @@ export async function fetchSearchedBlogs(search: string): Promise<{
     };
   } catch (error) {
     console.error('Error searching blogs:', error);
+    return {
+      blogs: [],
+      total: 0,
+    };
+  }
+}
+
+export async function fetchFilteredBlogs(
+  categorySlug: string,
+  page: number = 1,
+  limit: number = 9,
+): Promise<{
+  blogs: NonNullable<PreprGetFilteredBlogsQuery['Blogs']>['items'];
+  total: number;
+}> {
+  try {
+    const skip = (page - 1) * limit;
+    const result = await PreprSdk.GetFilteredBlogs({ categorySlug, limit, skip });
+    return {
+      blogs: result.Blogs?.items || [],
+      total: result.Blogs?.total || 0,
+    };
+  } catch (error) {
+    console.error('Error fetching filtered blogs:', error);
     return {
       blogs: [],
       total: 0,
