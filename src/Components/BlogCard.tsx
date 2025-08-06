@@ -9,6 +9,7 @@ type Blog = {
   _slug: string;
   banner_image: { url?: string };
   categories?: { _id?: string; body?: string; slug?: string }[];
+  content?: Array<{ text?: string; __typename?: string } | undefined>;
 };
 
 type BlogCardProps = {
@@ -45,11 +46,13 @@ export default function BlogCard({ blog, index = 0 }: BlogCardProps) {
       )}
 
       <div className="flex flex-1 flex-col gap-4">
-        <h3 className="font-roboto text-[21px] font-medium">{blog.title}</h3>
+        <h3 className="min-h-[50px] font-roboto text-[21px] font-medium">{blog.title}</h3>
 
-        <p className="line-clamp-3 flex-1 font-openSans text-[16px] font-normal text-black">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus velit id ex
-          vestibulum, in tristique risus tincidunt.{' '}
+        <p className="flex-1 font-openSans text-[16px] font-normal text-black">
+          {(() => {
+            const text = blog.content?.find((item) => !!item?.text)?.text;
+            return text && text.length > 100 ? `${text.slice(0, 100)}...` : text;
+          })()}
         </p>
 
         <Link

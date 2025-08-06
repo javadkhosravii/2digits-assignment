@@ -82,7 +82,7 @@ export default async function BlogDetail({ params }: Props) {
             )}
 
             {/* Title */}
-            <h1 className="font-roboto text-2xl font-medium leading-tight sm:text-3xl md:text-4xl lg:text-[48px]">
+            <h1 className="font-roboto text-2xl font-medium sm:text-3xl md:text-4xl md:!leading-[60px] lg:text-[48px]">
               {blog.title}
             </h1>
 
@@ -106,6 +106,10 @@ export default async function BlogDetail({ params }: Props) {
             {blog.content && blog.content.length > 0 ? (
               blog.content.flatMap((contentItem, index) => {
                 if (!contentItem) return [];
+
+                if (index === 0 && contentItem.__typename === 'Text' && getExcerpt() !== '') {
+                  return [];
+                }
 
                 if (
                   contentItem.__typename === 'Text' &&
