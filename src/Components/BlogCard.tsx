@@ -22,7 +22,7 @@ export default function BlogCard({ blog, index = 0 }: BlogCardProps) {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex h-full flex-col gap-6">
       {blog.banner_image.url && (
         <div className={`relative aspect-[16/9] w-full overflow-hidden ${getBorderRadiusClass()}`}>
           <Image
@@ -44,17 +44,17 @@ export default function BlogCard({ blog, index = 0 }: BlogCardProps) {
         </div>
       )}
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-1 flex-col gap-4">
         <h3 className="font-roboto text-[21px] font-medium">{blog.title}</h3>
 
-        <p className="font-openSans text-[16px] font-normal text-black">
+        <p className="line-clamp-3 flex-1 font-openSans text-[16px] font-normal text-black">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus velit id ex
           vestibulum, in tristique risus tincidunt.{' '}
         </p>
 
         <Link
           href={`/blog/${blog._slug}`}
-          className="flex items-center gap-4 font-roboto text-sm font-medium text-[#762BFF]">
+          className="mt-auto flex items-center gap-4 font-roboto text-sm font-medium text-[#762BFF]">
           <span>Read more</span>
 
           <span>
