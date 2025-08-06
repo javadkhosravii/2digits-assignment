@@ -1,3 +1,12 @@
 import twoDigits from '@2digits/eslint-config';
 
-export default twoDigits();
+const config = await twoDigits();
+
+export default [
+  ...config,
+  {
+    rules: {
+      'antfu/if-newline': 'off',
+    },
+  },
+];

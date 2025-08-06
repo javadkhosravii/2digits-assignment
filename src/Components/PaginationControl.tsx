@@ -20,8 +20,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
       pages.push(1);
 
       // Add ellipsis if there's a gap between 1 and the current page range
-      if (currentPage > 3) 
-        pages.push('...');
+      if (currentPage > 3) pages.push('...');
 
       // Calculate the range around current page
       const startPage = Math.max(2, currentPage - 1);
@@ -29,17 +28,14 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
 
       // Add pages around current page (but don't duplicate page 1)
       for (let i = startPage; i <= endPage; i++) {
-        if (i !== 1) 
-          pages.push(i);
+        if (i !== 1) pages.push(i);
       }
 
       // Add ellipsis if there's a gap between current range and last page
-      if (currentPage < totalPages - 2) 
-        pages.push('...');
+      if (currentPage < totalPages - 2) pages.push('...');
 
       // Always show last page (but don't duplicate if it's already included)
-      if (totalPages > 1 && !pages.includes(totalPages)) 
-        pages.push(totalPages);
+      if (totalPages > 1 && !pages.includes(totalPages)) pages.push(totalPages);
     }
 
     return pages;
