@@ -8,7 +8,7 @@ query GetHomePage {
       title
       image {
         _id
-        url
+        url(width: 3000)
       }
       text
     }
