@@ -5,7 +5,7 @@ query GetRelatedBlogs($categorySlug: String!) {
       title
       _slug
       banner_image {
-        url
+        url(width: 3000)
       }
       content {
         ... on Text {
